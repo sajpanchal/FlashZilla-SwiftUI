@@ -14,13 +14,15 @@ struct ContentView: View {
     @State var engine: CHHapticEngine?
     
     var body: some View {
-        Text("Hello World")
-            .onAppear {
-                prepareHaptics()
-            }
-            .onTapGesture {
-                complexSuccess()
-            }
+        VStack {
+            Text("Hello")
+            Spacer().frame(height: 100)
+            Text("World")
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            print("VStack tapped!")
+        }
     }
     
     func simpleSuccess() {
