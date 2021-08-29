@@ -6,36 +6,56 @@
 //
 
 import SwiftUI
+import CoreHaptics
 
 struct ContentView: View {
     @State var offset = CGSize.zero
     @State var isDragging = false
+    @State var engine: CHHapticEngine?
     
     var body: some View {
-        let dragGesture = DragGesture()
-            .onChanged { value in
-                self.offset = value.translation
+        Text("Hello World")
+            .onAppear {
+                prepareHaptics()
             }
-            .onEnded { _ in
-                withAnimation {
-                    self.offset = .zero
-                    self.isDragging = false
-                }
+            .onTapGesture {
+                complexSuccess()
             }
-        let pressGesture = LongPressGesture()
-            .onEnded { value in
-                withAnimation {
-                    self.isDragging = true
-                }
-            }
-        let combined = pressGesture.sequenced(before: dragGesture)
-        return Circle()
-            .fill(Color.red)
-            .frame(width: 64, height: 64, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-            .scaleEffect(isDragging ? 1.5 : 1)
-            .offset(offset)
-            .gesture(combined)
-
+    }
+    
+    func simpleSuccess() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.error)
+    }
+    func prepareHaptics() {
+        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else {
+            return
+        }
+        do {
+            self.engine = try CHHapticEngine()
+            try engine?.start()
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+    }
+    func complexSuccess() {
+        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else {
+            return
+        }
+        var events = [CHHapticEvent]()
+        let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
+        let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 1)
+        let event = CHHapticEvent(eventType: .hapticTransient, parameters: [intensity, sharpness], relativeTime: 0)
+        events.append(event)
+        do {
+            let pattern = try CHHapticPattern(events: events, parameters: [])
+            let player = try engine?.makePlayer(with: pattern)
+            try player?.start(atTime: 0)
+        }
+        catch {
+            print("not supported....",error.localizedDescription)
+        }
     }
 }
 
