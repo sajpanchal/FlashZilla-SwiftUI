@@ -11,6 +11,7 @@ struct CardView: View {
     let card: Card
     @State var isShowingAnswer = false
     @State var offset = CGSize.zero
+    @State var feedback = UINotificationFeedbackGenerator()
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     var removal: (() -> Void)? = nil
     
@@ -43,14 +44,22 @@ struct CardView: View {
             DragGesture()
                 .onChanged { gesture in
                     self.offset = gesture.translation
+                    self.feedback.prepare()
                 }
                 .onEnded { _ in
-                    if abs(self.offset.width) > 100 {
+                     if abs(self.offset.width) > 100 {
+                         if self.offset.width > 0 {
+                            self.feedback.notificationOccurred(.success)
+                         }
+                         else {
+                            self.feedback.notificationOccurred(.error)
+                     }
                         self.removal?()
                     }
                     else {
                         self.offset = .zero
                     }
+                    
                 }
         )
         .onTapGesture {
