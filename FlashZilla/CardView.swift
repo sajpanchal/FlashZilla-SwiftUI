@@ -13,6 +13,7 @@ struct CardView: View {
     @State var offset = CGSize.zero
     @State var feedback = UINotificationFeedbackGenerator()
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
+    @Environment(\.accessibilityEnabled) var accessibilityEnabled
     var removal: (() -> Void)? = nil
     
     var body: some View {
@@ -24,14 +25,21 @@ struct CardView: View {
                                 .fill(offset.width > 0 ? Color.green : Color.red))
                 .shadow(radius: 10)
             VStack {
-                Text(card.prompt)
-                    .font(.largeTitle)
-                    .foregroundColor(.black)
-                if isShowingAnswer {
-                Text(card.answer)
-                    .font(.title)
-                    .foregroundColor(.gray)
+                if accessibilityEnabled {
+                    Text(isShowingAnswer ? card.answer : card.prompt)
+                        .font(.largeTitle)
+                        .foregroundColor(.black)
                 }
+                else {
+                    Text(card.prompt)
+                        .font(.largeTitle)
+                        .foregroundColor(.black)
+                    if isShowingAnswer {
+                        Text(card.answer)
+                            .font(.title)
+                            .foregroundColor(.gray)
+                    }
+                }                                    
             }
             .padding(20)
             .multilineTextAlignment(.center)
@@ -65,6 +73,7 @@ struct CardView: View {
         .onTapGesture {
             isShowingAnswer.toggle()
         }
+        .animation(.spring())
     }
 }
 
