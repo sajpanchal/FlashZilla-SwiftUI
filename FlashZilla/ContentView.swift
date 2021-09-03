@@ -9,11 +9,13 @@ import SwiftUI
 import CoreHaptics
 
 struct ContentView: View {
-    @State var cards = [Card](repeating: Card.example, count: 10)
+    @State var cards = [Card]()
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.accessibilityEnabled) var accessibilityEnabled
     @State var timeRemaining = 100
     @State var isActive = true
+    @State var showingEditScreen = false
+    
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
@@ -55,6 +57,23 @@ struct ContentView: View {
                         .clipShape(Capsule())
                 }
             }
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        self.showingEditScreen = true
+                    }) {
+                        Image(systemName: "plus.circle")
+                            .padding()
+                            .background(Color.black.opacity(0.7))
+                            .clipShape(Circle())
+                    }
+                }
+                Spacer()
+            }
+            .foregroundColor(.white)
+            .font(.largeTitle)
+            .padding()
             if differentiateWithoutColor || accessibilityEnabled {
                 VStack {
                     Spacer()
@@ -92,6 +111,10 @@ struct ContentView: View {
                 }
             }
         }
+        .sheet(isPresented: $showingEditScreen, onDismiss: resetCards) {
+            EditCards()
+        }
+        .onAppear(perform: resetCards)
         .onReceive(timer) { time in
             guard self.isActive else {
                 return
@@ -121,9 +144,17 @@ struct ContentView: View {
     }
     
     func resetCards() {
-        cards = [Card](repeating: Card.example, count: 10)
         timeRemaining = 100
         isActive = true
+        loadData()
+    }
+    
+    func loadData() {
+        if let data = UserDefaults.standard.data(forKey: "Cards") {
+            if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
+                self.cards = decoded
+            }
+        }
     }
 }
 

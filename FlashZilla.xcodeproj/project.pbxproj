@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7267B3B526DD3078009E8567 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7267B3B426DD3078009E8567 /* Card.swift */; };
 		7267B3B726DD346A009E8567 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7267B3B626DD346A009E8567 /* CardView.swift */; };
+		726B9C6D26E2746800A910C8 /* EditCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726B9C6C26E2746800A910C8 /* EditCards.swift */; };
 		727DB5E126DB060C0095B55E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727DB5E026DB060C0095B55E /* AppDelegate.swift */; };
 		727DB5E326DB060C0095B55E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727DB5E226DB060C0095B55E /* SceneDelegate.swift */; };
 		727DB5E526DB060C0095B55E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727DB5E426DB060C0095B55E /* ContentView.swift */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		7267B3B426DD3078009E8567 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		7267B3B626DD346A009E8567 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		726B9C6C26E2746800A910C8 /* EditCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCards.swift; sourceTree = "<group>"; };
 		727DB5DD26DB060C0095B55E /* FlashZilla.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashZilla.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		727DB5E026DB060C0095B55E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		727DB5E226DB060C0095B55E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				727DB5E226DB060C0095B55E /* SceneDelegate.swift */,
 				727DB5E426DB060C0095B55E /* ContentView.swift */,
 				7267B3B426DD3078009E8567 /* Card.swift */,
+				726B9C6C26E2746800A910C8 /* EditCards.swift */,
 				7267B3B626DD346A009E8567 /* CardView.swift */,
 				727DB5E626DB060F0095B55E /* Assets.xcassets */,
 				727DB5EB26DB060F0095B55E /* LaunchScreen.storyboard */,
@@ -154,6 +157,7 @@
 				727DB5E126DB060C0095B55E /* AppDelegate.swift in Sources */,
 				727DB5E326DB060C0095B55E /* SceneDelegate.swift in Sources */,
 				727DB5E526DB060C0095B55E /* ContentView.swift in Sources */,
+				726B9C6D26E2746800A910C8 /* EditCards.swift in Sources */,
 				7267B3B526DD3078009E8567 /* Card.swift in Sources */,
 				7267B3B726DD346A009E8567 /* CardView.swift in Sources */,
 			);

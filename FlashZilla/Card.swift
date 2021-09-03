@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Card {
+struct Card: Codable {
     let prompt: String
     let answer: String
     
@@ -15,3 +15,5 @@ struct Card {
         Card(prompt: "Who played the 13th Doctor in Doctor Who?", answer: "Jodie Whittaker")
     }
 }
+
+
