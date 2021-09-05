@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Card: Codable {
     let prompt: String
@@ -16,4 +17,6 @@ struct Card: Codable {
     }
 }
 
-
+class Result: ObservableObject {
+    @Published var isPassed: Bool = false
+}

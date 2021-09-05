@@ -15,7 +15,7 @@ struct ContentView: View {
     @State var timeRemaining = 100
     @State var isActive = true
     @State var showingEditScreen = false
-    
+    var result = Result()
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
@@ -38,12 +38,23 @@ struct ContentView: View {
                     )
                 ZStack {
                     ForEach(0..<cards.count, id: \.self) { index in
-                        CardView(card: self.cards[index]) {
-                            withAnimation {
-                                self.removeCard(at: index)
+                        let removal = { (correct: Bool) in
+                            print(correct)
+                            if result.isPassed {
+                                withAnimation {
+                                    self.removeCard(at: index)
+                                }
+                            }
+                            else {
+                                let wrongCard = self.cards.remove(at: index)
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    self.cards.insert(wrongCard, at: 0)
+                                }
                             }
                         }
-                            .stacked(at: index, in: self.cards.count)
+                        CardView(card: self.cards[index], removal: removal)
+                        .environmentObject(result)
+                        .stacked(at: index, in: self.cards.count)
                         .allowsHitTesting(index == self.cards.count - 1)
                         .accessibility(hidden: index < self.cards.count - 1)
                     }
@@ -137,7 +148,9 @@ struct ContentView: View {
         guard index >= 0 else {
             return
         }
+        
         cards.remove(at: index)
+        
         if cards.isEmpty {
             isActive = false
         }
